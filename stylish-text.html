@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stylish Text Generator</title>
+
+<style>
+body {
+  font-family: 'Segoe UI';
+  background: #eef2f7;
+  text-align: center;
+}
+
+.container {
+  margin: 60px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 380px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.output-box {
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  word-break: break-all;
+}
+
+.copy-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Stylish Text Generator ✨</h2>
+
+  <input type="text" id="input" placeholder="Enter text..." oninput="convert()">
+
+  <div id="results"></div>
+</div>
+
+<script>
+function convert(){
+  let text = document.getElementById("input").value;
+  let results = document.getElementById("results");
+  results.innerHTML = "";
+
+  const styles = [
+    t => t.toUpperCase(),
+    t => t.toLowerCase(),
+    t => t.split("").join(" "),
+    t => t.replace(/a/g,"@").replace(/s/g,"$"),
+
+    t => t.split("").map(c => 
+      "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join(""),
+
+    t => t.split("").map(c => 
+      "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join(""),
+
+    t => t.split("").map(c => 
+      "🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join(""),
+
+    t => t.split("").map(c => 
+      "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join(""),
+
+    t => t.split("").map(c => 
+      "αвc∂єƒgнιנкℓмнσρqяѕтυνωχуz"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join(""),
+
+    t => t.split("").map(c => 
+      "卂乃匚ᗪ乇千Ꮆ卄丨ﾌҜㄥ爪几ㄖ卩Ɋ尺丂ㄒㄩᐯ山乂ㄚ乙"["abcdefghijklmnopqrstuvwxyz".indexOf(c.toLowerCase())] || c
+    ).join("")
+  ];
+
+  styles.forEach(style => {
+    let styledText = style(text);
+
+    let box = document.createElement("div");
+    box.className = "output-box";
+
+    let span = document.createElement("span");
+    span.innerText = styledText;
+
+    let btn = document.createElement("button");
+    btn.innerText = "Copy";
+    btn.className = "copy-btn";
+    btn.onclick = () => {
+      navigator.clipboard.writeText(styledText);
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = "Copy", 1000);
+    };
+
+    box.appendChild(span);
+    box.appendChild(btn);
+    results.appendChild(box);
+  });
+}
+</script>
+
+</body>
+</html>

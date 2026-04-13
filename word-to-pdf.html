@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Word to PDF</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body {font-family:Segoe UI;background:#eef2f7;text-align:center;}
+.container {margin:80px auto; background:white; padding:30px; border-radius:15px; width:350px;}
+button {padding:10px 15px; background:#3b82f6; color:white; border:none; border-radius:8px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Word → PDF</h2>
+<input type="file" id="upload" accept=".docx"><br><br>
+<button onclick="convert()">Convert</button>
+</div>
+
+<script>
+async function convert(){
+let file=document.getElementById("upload").files[0];
+
+const reader=new FileReader();
+reader.onload=async function(event){
+
+let result=await mammoth.extractRawText({arrayBuffer:event.target.result});
+
+const { jsPDF } = window.jspdf;
+let pdf=new jsPDF();
+
+let text=result.value;
+let lines=pdf.splitTextToSize(text,180);
+
+pdf.text(lines,10,10);
+pdf.save("document.pdf");
+};
+
+reader.readAsArrayBuffer(file);
+}
+</script>
+
+</body>
+</html>
